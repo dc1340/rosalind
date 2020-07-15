@@ -134,3 +134,41 @@ Our aim is to somehow modify this recurrence relation to achieve a dynamic progr
 Given: Positive integers n≤100 and m≤20.
 
 Return: The total number of pairs of rabbits that will remain after the n-th month if all rabbits live for m months.
+
+Sample Dataset
+6 3
+Sample Output
+4
+
+
+```python
+import numpy as np
+
+trans=np.zeros((3,3))
+
+def make_trans(k):
+
+    
+    return(np.concatenate(
+        (np.concatenate( 
+            (np.zeros( (1, 1)), 
+             np.ones((1, k-1))),
+            axis=1),
+         np.concatenate( 
+             (np.identity(k-1),
+             np.zeros( (k-1, 1))),
+                           axis=1
+         )
+        )
+    ))
+           
+def kill_rabbits(n, k):
+    
+    return(
+        np.matmul(
+            np.linalg.matrix_power(make_trans(k) , n),
+             np.reshape( [1] + [0] * (k-1),
+                       (k, 1))
+        ))
+
+```
